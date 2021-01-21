@@ -1,9 +1,40 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/node-apis/
- */
-// You can delete this file if you're not using it
+const fetch = require('node-fetch');
+
+exports.sourceNodes = async ({
+  actions,
+  createNodeId,
+  createContentDigest,
+}, configOptions) => {
+  const {createNode} = actions;
+  const {url} = configOptions;
+  const baseUrl = `${url}/careers`;
+
+  const careers = await fetch(baseUrl)
+    .then((response) => response.json())
+    .catch((error) => console.log(error));
+  
+  const details = careers.map(async (career) => {
+    const careerDetail = await fetch(`${baseUrl}/${career.slug}`)
+      .then((response) => response.json())
+      .catch((error) => console.log(error));
+
+    return careerDetail.position;
+  });
+
+  details.forEach((detail) => 
+    createNode({
+      ...detail,
+      id: createNodeId(`career-${detail.slug}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: 'career',
+        content: JSON.stringify(detail),
+        contentDigest: createContentDigest(detail),
+      },
+    })
+  );
+}
 
 /**
  * You can uncomment the following line to verify that
