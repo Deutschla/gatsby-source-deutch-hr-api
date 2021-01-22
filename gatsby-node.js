@@ -24,11 +24,11 @@ exports.sourceNodes = async ({
   details.forEach((detail) => 
     createNode({
       ...detail,
-      id: createNodeId(`career-${detail.slug}`),
+      id: createNodeId(`job-${detail.slug}`),
       parent: null,
       children: [],
       internal: {
-        type: 'career',
+        type: 'jobs',
         content: JSON.stringify(detail),
         contentDigest: createContentDigest(detail),
       },
