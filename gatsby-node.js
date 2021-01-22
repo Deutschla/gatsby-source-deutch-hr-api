@@ -21,6 +21,8 @@ exports.sourceNodes = async ({
     return careerDetail.position;
   });
 
+  console.log('*****', details);
+
   details.forEach((detail) => 
     createNode({
       ...detail,
