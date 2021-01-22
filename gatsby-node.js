@@ -13,9 +13,9 @@ exports.sourceNodes = async ({
     .then((response) => response.json())
     .catch((error) => console.log(error));
   
-  const details = await careers.map(async (career) => {
+  const details = careers.map(async (career) => {
     const careerDetail = await fetch(`${baseUrl}/${career.slug}`)
-      .then((response) => response.json())
+      .then(async(response) => await response.json())
       .catch((error) => console.log(error));
 
     return careerDetail.position;
