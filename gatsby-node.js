@@ -13,7 +13,7 @@ exports.sourceNodes = async ({
     .then((response) => response.json())
     .catch((error) => console.log(error));
   
-  const details = careers.map(async (career) => {
+  const details = await careers.map(async (career) => {
     const careerDetail = await fetch(`${baseUrl}/${career.slug}`)
       .then((response) => response.json())
       .catch((error) => console.log(error));
