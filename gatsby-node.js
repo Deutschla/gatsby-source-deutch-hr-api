@@ -12,17 +12,16 @@ exports.sourceNodes = async ({
   const careers = await fetch(baseUrl)
     .then((response) => response.json())
     .catch((error) => console.log(error));
-  
-  const details = careers.map(async (career) => {
-    const careerDetail = await fetch(`${baseUrl}/${career.slug}`)
-      .then(async(response) => {
-        const career = await response.json();
-        return career.position
-      })
-      .catch((error) => console.log(error));
 
-    return careerDetail;
-  });
+  const details = [];
+
+  for (const career of careers) {
+    const careerDetail = await fetch(`${baseUrl}/${career.slug}`)
+      .then(async(response) => response.json())
+      .catch((error) => error);
+    
+      details.push(careerDetail.position)
+  }
 
   console.log('*****', details);
 
