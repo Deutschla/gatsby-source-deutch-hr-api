@@ -6,8 +6,8 @@ exports.sourceNodes = async ({
   createContentDigest,
 }, configOptions) => {
   const {createNode} = actions;
-  const {url} = configOptions;
-  const baseUrl = `${url}/careers`;
+  const {url, careersEndpoint} = configOptions;
+  const baseUrl = `${url}/${careersEndpoint}`;
 
   const careers = await fetch(baseUrl)
     .then((response) => response.json())
